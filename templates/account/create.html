@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<h1>Rejestracja</h1>
+<hr />
+<div class="row show-grid">
+	<div class="span16">
+		<form action="" method="post">
+			{% csrf_token %}
+			{{ form.as_bstrap }}
+			
+			<div class="actions">
+				<button type="submit" class="btn success">Załóż konto</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+{% endblock content %}
