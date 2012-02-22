@@ -1,0 +1,35 @@
+{% extends 'market/base.html' %}
+{% load chart_tags %}
+
+{% block content %}
+	<form action="" method="POST" class="marketSearchForm">
+		{% csrf_token %}
+		<div class="controls">
+			{{ form.items.label_tag }} {{ form.items }}
+		</div>
+		
+		<div class="controls">
+			{{ form.dateF }} {{ form.dateT }}
+		</div>
+		
+		<div class="controls left">
+			{{ form.chartType.label_tag }} {{ form.chartType }}
+		</div>
+		
+		<div class="controls left mLeft" id="priceTypeWraper">
+			{{ form.priceType.label_tag }} {{ form.priceType }}
+		</div>
+		
+		<div class="clear"></div>
+		
+		<div class="controls">
+			{{ form.technology.label_tag }} {{ form.technology }}
+		</div>
+		
+		<button type="submit" class="btn btn-primary">Pokaż</button>
+	</form>
+	
+	{% if chart or chart.json %}
+		{% chart_render chart %}
+	{% endif %}
+{% endblock content %}

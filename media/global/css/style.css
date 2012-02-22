@@ -1,0 +1,10 @@
+body { padding-top: 60px !important; }
+
+.right { float: right; }
+.left { float: left; }
+.clear { clear: both; }
+.hidden { display: none; }
+.visible { display: block; }
+
+.mLeft { margin-left: 4px; }
+.mRight { margin-right: 4px; }

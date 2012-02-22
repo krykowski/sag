@@ -1,0 +1,15 @@
+{% extends 'account/base.html' %}
+
+{% block content %}
+
+<form action="{% url account.views.account %}" method="post" class="form-horizontal">
+	{% csrf_token %}
+	{{ form.as_bstrap }}
+	
+	<div class="form-actions">
+		<button type="reset" class="btn">Resetuj</button>
+		<button type="submit" class="btn btn-primary">Zapisz</button>
+	</div>
+</form>
+
+{% endblock content %}

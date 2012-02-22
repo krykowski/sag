@@ -1,0 +1,7 @@
+<form action="{% url account.views.login %}" method="post" class="form-inline navbar-form">
+	{% csrf_token %}
+	{{ form.username }}
+	{{ form.password }}
+	
+	<button type="submit" class="btn">Zaloguj</button>
+</form>

@@ -1,0 +1,46 @@
+<div id="chartContainer"></div>
+{% if chart.technology == 'flash' %}
+	<script type="text/javascript">
+		swfobject.embedSWF("{{ STATIC_URL }}global/open-flash-chart.swf", "chartContainer", "{{ chart.width }}", "{{ chart.height }}", "9.0.0", "{{ STATIC_URL}}global/expressInstall.swf", {'get-data': 'getData'}, {'wmode': 'transparent'});
+ 
+		function getData() {
+			return JSON.stringify({{ chart.json|safe }});
+		}
+	</script>
+{% else %}
+	{% if chart.technology == 'javascript' %}
+		<script type="text/javascript">
+			var data = new google.visualization.DataTable();
+			{% for col in chart.cols %}
+				data.addColumn('{{ col.type }}', '{{ col.label }}');
+			{% endfor %}
+			
+			{% for row in chart.rows %}
+				data.addRow([{{ row|join:',' }}]); // Add a row with a string and a date value.
+			{% endfor %}
+				
+			var options = {
+				'title':'{{ chart.tile }}',
+				'width': {{ chart.width }},
+				'height': {{ chart.height }},
+				'strictFirstColumnType': false,
+	       	};
+	       	
+	       	var chart;
+	       	
+			{% if chart.type == 'line' %}
+				chart = new google.visualization.LineChart(document.getElementById('chartContainer'));
+			{% endif %}
+			
+			{% if chart.type == 'bar' %}
+				chart = new google.visualization.ColumnChart(document.getElementById('chartContainer'));
+			{% endif %}
+			
+			{% if chart.type == 'candle' %}
+				chart = new google.visualization.CandlestickChart(document.getElementById('chartContainer'));
+			{% endif %}
+			
+			chart.draw(data, options);
+		</script>
+	{% endif %}
+{% endif %}

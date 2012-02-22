@@ -13,7 +13,7 @@ urlpatterns = patterns('',
     (r'^$', direct_to_template, {'template': 'pages/index.html'}),
     (r'^contact/$', direct_to_template, {'template': 'pages/contact.html'}),
     url(r'^account/', include('account.urls')),
-    
+    url(r'^market/', include('market.urls')),
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 

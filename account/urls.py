@@ -1,12 +1,13 @@
-from django.conf.urls.defaults import patterns, include, url
-from django.views.generic.simple import direct_to_template
+#-*- coding: utf-8 -*-
+
+from django.conf.urls.defaults import patterns, url
 from django.views.generic.create_update import create_object
 
+from account.forms import UserCreateForm
+
 urlpatterns = patterns('',
+    (r'^$', 'account.views.account'),
+    (r'^login/$', 'account.views.login'),
     (r'^register/$', 'account.views.register'),
-    #url(r'^register/$', create_object, {
-    ##                                   'form_class': UserCreateForm, 
-     ##                                  'template_name': 'account/create.html',
-       ##                                'post_save_redirect': '/account/autologin'
-        ##                               }, name='account.views.register'),
+    (r'^logout/$', 'account.views.logout'),
 )

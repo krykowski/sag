@@ -7,13 +7,13 @@ from django.utils.safestring import mark_safe
 
 class ErrorListExt(ErrorList):
     def __unicode__(self):
-        return self.as_span()
+        return self.as_p()
     
-    def as_span(self):
+    def as_p(self):
         if not self: 
             return u''
         
-        return u'%s' % ''.join([u'<span class="help-inline">%s</span>' % e for e in self])
+        return u'%s' % ''.join([u'<p class="help-block">%s</p>' % e for e in self])
       
 class BaseFormExt(BaseForm):  
     def _html_output(self, normal_row, error_row, row_ender, help_text_html, errors_on_separate_row, stacked=None):
@@ -106,12 +106,12 @@ class BaseFormExt(BaseForm):
         
     def _as_bstrap(self, stacked=True):
         if stacked:
-            helpText = u'<span class="help-inline">%s</span>'
+            helpText = u'<p class="help-inline">%s</p>'
         else:
-            helpText = u'<span class="help-block">%s</span>'
+            helpText = u'<p class="help-block">%s</p>'
             
         return self._html_output(
-            normal_row = u'<div class="clearfix %(container_class)s">%(label)s <div class="input">%(field)s%(help_text)s%(errors)s</div></div>',
+            normal_row = u'<div class="control-group %(container_class)s">%(label)s <div class="controls">%(field)s%(help_text)s%(errors)s</div></div>',
             error_row = helpText,
             row_ender = '</div>',
             help_text_html = helpText,

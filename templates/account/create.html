@@ -4,14 +4,14 @@
 
 <h1>Rejestracja</h1>
 <hr />
-<div class="row show-grid">
+<div class="row">
 	<div class="span16">
-		<form action="" method="post">
+		<form action="" method="post" class="form-horizontal">
 			{% csrf_token %}
 			{{ form.as_bstrap }}
 			
-			<div class="actions">
-				<button type="submit" class="btn success">Załóż konto</button>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-success">Załóż konto</button>
 			</div>
 		</form>
 	</div>

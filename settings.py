@@ -1,7 +1,10 @@
+#-*- coding: utf-8 -*-
 # Django settings for turniej project.
+import django.conf.global_settings as DEFAULT_SETTINGS
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+ROOT_DIR = '/home/kamil/workspace/turniej/'
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -12,7 +15,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '/home/kamil/workspace/turniej/database.sqlite3',                      # Or path to database file if using sqlite3.
+        'NAME': ROOT_DIR + 'database.sqlite3',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -31,7 +34,7 @@ TIME_ZONE = 'America/Chicago'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pl-PL'
 
 SITE_ID = 1
 
@@ -56,11 +59,11 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = '/home/kamil/workspace/turniej/static/'
+STATIC_ROOT = ROOT_DIR + 'static/'
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static'
+STATIC_URL = '/static/'
 
 # URL prefix for admin static files -- CSS, JavaScript and images.
 # Make sure to use a trailing slash.
@@ -69,9 +72,8 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    '/home/kamil/workspace/turniej/contrib/bootstrap/lib',
-    '/home/kamil/workspace/turniej/contrib/bootstrap/js',
-    '/home/kamil/workspace/turniej/media',
+    ROOT_DIR + 'contrib/bootstrap/static',
+    ROOT_DIR + 'media',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -106,7 +108,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'turniej.urls'
 
 TEMPLATE_DIRS = (
-    '/home/kamil/workspace/turniej/templates'
+    ROOT_DIR + 'templates'
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -120,7 +122,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'account',
-    'base',
+    'market',
+    'chart',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -149,3 +152,22 @@ LOGGING = {
         },
     }
 }
+
+TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + ("context_processors.settings_context",)
+
+# Project settings
+PROJECT_NAME_SHORT = 'SAG'
+PROJECT_NAME = 'Sytem Analizy Giełdowej'
+
+IMPORT_PATH = ROOT_DIR + 'import/'
+
+CHART_TYPES = (
+    ('bar', u'Słupkowy'),
+    ('line', u'Liniowy'),
+    ('candle', u'Świeczkowy')
+)
+
+PRICE_TYPES = (
+    ('open', 'Cena otwarcia'),
+    ('close', 'Cena zamknięcia'),
+)
