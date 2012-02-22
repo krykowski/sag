@@ -39,12 +39,20 @@ class GoogleChart(object):
         
         index = 0
         for v in values:
-            if self.cols[index]['type'] == 'date':
+            colType = self.cols[index]['type']
+            
+            # Special formatting
+            if colType == 'date':
                 dateSplit = v.split('.')
                 
                 v = "new Date(%s,%s,%s)" % (dateSplit[2], dateSplit[1], dateSplit[0])
             
-            data.append(v)
+            # Special behavior for candlestick chart
+            if colType == 'number' and self.type == 'candle':
+                for e in v:
+                    data.append(e)
+            else:
+                data.append(v)
                  
             index += 1
         

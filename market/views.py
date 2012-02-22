@@ -60,7 +60,14 @@ def index(request):
                 chart.json = chart.create()
             else:
                 chart = GoogleChart(name, chartType)
-                chart.addColumn('Data', 'date', 'date')
+                
+                # date type is nont supported in candlestick charts
+                axisXtype = 'date'
+                
+                if chartType == 'candle':
+                    axisXtype = 'string'
+                    
+                chart.addColumn('Data', axisXtype, 'date')
                 chart.addColumn('Wartość', 'number', 'value')
                 
                 for item in items:

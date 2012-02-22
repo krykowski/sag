@@ -10,20 +10,32 @@
 {% else %}
 	{% if chart.technology == 'javascript' %}
 		<script type="text/javascript">
-			var data = new google.visualization.DataTable();
-			{% for col in chart.cols %}
-				data.addColumn('{{ col.type }}', '{{ col.label }}');
-			{% endfor %}
-			
-			{% for row in chart.rows %}
-				data.addRow([{{ row|join:',' }}]); // Add a row with a string and a date value.
-			{% endfor %}
+			{% if chart.type == 'candle' %}
+				{% autoescape off %}
+				var data = google.visualization.arrayToDataTable([
+					{% for row in chart.rows %}
+						{{ row }},
+					{% endfor %}
+	        	], true);
+        		{% endautoescape %}
+        	{% else %}
+	        	var data = new google.visualization.DataTable();
+	        	
+				{% for col in chart.cols %}
+					data.addColumn('{{ col.type }}', '{{ col.label }}');
+				{% endfor %}
 				
+				{% for row in chart.rows %}
+					data.addRow([{{ row|join:',' }}]);
+				{% endfor %}
+			{% endif %}
+			
 			var options = {
-				'title':'{{ chart.tile }}',
-				'width': {{ chart.width }},
-				'height': {{ chart.height }},
-				'strictFirstColumnType': false,
+				title: '{{ chart.title }}',
+				width: {{ chart.width }},
+				height: {{ chart.height }},
+				strictFirstColumnType: false,
+				legend: 'none',
 	       	};
 	       	
 	       	var chart;
