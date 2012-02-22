@@ -7,6 +7,9 @@
 *.o
 *.so
 *.pyc
+*.pydevproject
+*.prefs
+*.mst
 
 # Packages #
 ############
@@ -26,6 +29,7 @@
 *.log
 *.sql
 *.sqlite
+*.sqlite3
 
 # OS generated files #
 ######################
