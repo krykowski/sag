@@ -21,6 +21,10 @@
 		<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}global/css/style.css" />
 		{% block extra_css %}{% endblock extra_css %}
 		
+		<script type="text/javascript">
+			// Global JS variables
+			var current_date = new Date('{{ current_time|date:"Y-m-d" }}');
+		</script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js" type="text/javascript"></script>
 		<script src="{{ STATIC_URL }}global/js/less-1.2.1.min.js" type="text/javascript"></script>
@@ -38,19 +42,19 @@
 			
 			<div class="navbar-inner">
 				<div class="container">
-					<a class="brand" href="#">
+					<a class="brand" href="/">
 						{{ PROJECT_NAME_SHORT }}
 					</a>
 						
 					<ul class="nav">
-						<li class="active"><a href="/">Start</a></li>
+						<li {% if PAGE_NAME == 'index' %}class="active"{% endif %}><a href="/">Start</a></li>
 						{% if user.is_authenticated %}
 							
 						{% else %}
-							<li><a href="{% url account.views.register %}">Rejstracja</a></li>
+							<li {% if PAGE_NAME == 'register' %}class="active"{% endif %}><a href="{% url account.views.register %}">Rejstracja</a></li>
 						{% endif %}
-						<li><a href="{% url market.views.index %}">Market</a></li>
-						<li><a href="#">Kontakt</a></li>
+						<li {% if PAGE_NAME == 'market' %}class="active"{% endif %}><a href="{% url market.views.index %}">Market</a></li>
+						<li {% if PAGE_NAME == 'contact' %}class="active"{% endif %}><a href="/contact/">Kontakt</a></li>
 					</ul>
 					
 					<ul class="nav pull-right">
@@ -64,6 +68,7 @@
 								</a>
 								<ul class="dropdown-menu">
 									<li><a href="{% url account.views.account %}">Profil</a></li>
+									<li><a href="{% url investment.views.wallet %}">Portfel</a></li>
 									<li class="divider"></li>
 									<li><a href="{% url account.views.logout %}">Wyloguj</a></li>
 								</ul>
@@ -79,12 +84,22 @@
 		<div class="container">
 			{% block content_up %}{% endblock content_up %}
 			
+			{% block messages %}
+				{% if messages %}
+					{% for message in messages %}
+						<div class="alert{% if message.tags %} alert-{{ message.tags }}{% endif %}">
+							{{ message }}
+						</div>
+					{% endfor %}
+				{% endif %}
+			{% endblock messages %}
+			
 			{% block content %}{% endblock content %}
 			
 			{% block content_down %}{% endblock content_down %}
 			<footer>
 				<p>
-					&copy; Kamil Rykowski 2012
+					&copy; Kamil Rykowski 2012 | {{ current_time }}
 				</p>
 			</footer>
 		</div>

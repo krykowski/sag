@@ -8,3 +8,8 @@ body { padding-top: 60px !important; }
 
 .mLeft { margin-left: 4px; }
 .mRight { margin-right: 4px; }
+
+.ajaxLoader { width: 16px; height: 16px; background: url('/static/global/images/loader.gif'); display: inline-block; }
+
+.profitPlus { color: green; }
+.profitMinus { color: red; }

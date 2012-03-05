@@ -1,0 +1,70 @@
+{% extends 'investment/base.html' %}
+
+{% block content %}
+	<form action="" method="POST" class="form-horizontal" id="buyWalletItemForm">
+		{% csrf_token %}
+		<div class="control-group">
+			{{ form.item.label_tag }}
+			
+			<div class="controls">
+				{{ form.item }}
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<label>Cena akcji</label>
+			
+			<label>
+				<strong>
+					<span id="itemPrice">16.00PLN </span>
+				</strong>
+			</label>
+		</div>
+		
+		<div class="control-group {% if form.quantity.errors %}error{% endif %}">
+			{{ form.quantity.label_tag }}
+			
+			<div class="controls">
+				{{ form.quantity }}
+				
+				{% for e in form.quantity.errors %}
+					<p class="help-block">{{ e }}</p>
+				{% endfor %}
+			</div>
+		</div>
+		
+		<div class="control-group {% if form.price_limit.errors %}error{% endif %}">
+			{{ form.price_limit.label_tag }}
+			
+			<div class="controls">
+				{{ form.price_limit }} PLN
+				<p class="help-block">
+					{{ form.price_limit.help_text }}
+					
+					{% for e in form.date_limit.errors %}
+						<p class="help-block">{{ e }}</p>
+					{% endfor %}
+				</p>
+			</div>
+		</div>
+		
+		<div class="control-group {% if form.date_limit.errors %}error{% endif %}">
+			{{ form.date_limit.label_tag }}
+			
+			<div class="controls">
+				{{ form.date_limit }}
+				<p class="help-block">
+					{{ form.date_limit.help_text }}
+					
+					{% for e in form.date_limit.errors %}
+						<p class="help-block">{{ e }}</p>
+					{% endfor %}
+				</p>
+			</div>
+		</div>
+		
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary">Potwierdź</button>
+		</div>
+	</form>
+{% endblock content %}

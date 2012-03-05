@@ -7,6 +7,7 @@ from django.template.context import RequestContext
 from utils import render_to
 
 from account.forms import UserCreateForm, UserLoginForm, UserUpdateForm
+from investment.models import Wallet
 
 @render_to('account/account.html')
 def account(request):
@@ -57,6 +58,8 @@ def login(request):
 
 @render_to('account/create.html')
 def register(request):
+    PAGE_NAME = 'register'
+    
     if request.method == 'GET':
         form = UserCreateForm()
     else:
@@ -67,6 +70,12 @@ def register(request):
             user.set_password(request.POST['password'])
             user.save()
             
+            # Create wallet for user
+            wallet = Wallet()
+            wallet.user = user
+            wallet.money = 0
+            wallet.save()
+            
             authUser = auth.authenticate(username=request.POST['username'], password=request.POST['password'])
             
             if authUser is not None:
@@ -74,4 +83,7 @@ def register(request):
             
                 return redirect('account.views.account')
             
-    return {'form': form}
+    return {
+            'PAGE_NAME': PAGE_NAME,
+            'form': form
+    }

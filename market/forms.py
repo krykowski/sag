@@ -13,7 +13,7 @@ class MarketSearch(FormExt):
     )
     
     items = forms.ModelChoiceField(Item.objects.all(), label='Instrument', required=True, initial=0)
-    dateF = forms.DateField(required=False, widget=forms.TextInput(attrs={'class':'datepicker', 'placeholder': u'Date od'}))
+    dateF = forms.DateField(required=False, widget=forms.TextInput(attrs={'class':'datepicker', 'placeholder': u'Data od'}))
     dateT = forms.DateField(required=False, widget=forms.TextInput(attrs={'class':'datepicker', 'placeholder': u'Data do'}))
     chartType = forms.ChoiceField(settings.CHART_TYPES, required=True, label='Typ wykresu')
     priceType = forms.ChoiceField(settings.PRICE_TYPES, required=False, label='Cena')

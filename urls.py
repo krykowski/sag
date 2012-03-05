@@ -10,10 +10,11 @@ from account.forms import UserCreateForm
 
 urlpatterns = patterns('',
     # Examples:
-    (r'^$', direct_to_template, {'template': 'pages/index.html'}),
-    (r'^contact/$', direct_to_template, {'template': 'pages/contact.html'}),
+    (r'^$', direct_to_template, {'template': 'pages/index.html', 'extra_context': {'PAGE_NAME': 'index'}}),
+    (r'^contact/$', direct_to_template, {'template': 'pages/contact.html', 'extra_context': {'PAGE_NAME': 'contact'}}),
     url(r'^account/', include('account.urls')),
     url(r'^market/', include('market.urls')),
+    url(r'^investment/', include('investment.urls')),
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 

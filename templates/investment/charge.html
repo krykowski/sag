@@ -1,0 +1,12 @@
+{% extends 'investment/base.html' %}
+
+{% block content %}
+	<form action="" method="POST" class="form-horizontal">
+		{% csrf_token %}
+		{{ form.as_bstrap }}
+		
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary">Doładuj</button>
+		</div>
+	</form>
+{% endblock content %}

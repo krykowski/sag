@@ -5,20 +5,29 @@ import time
 
 from django.http import HttpResponse
 from django.conf import settings
-from utils import render_to
+from django.shortcuts import redirect
+
+from utils import render_to, render_to_json
 from chart.charts import ChartExt, GoogleChart
 
 from market.models import Item, ItemHistory
 from market.forms import MarketSearch
+from django.views.decorators.csrf import csrf_exempt
 
 @render_to('market/index.html')
 def index(request):
-    result = {}
+    PAGE_NAME = 'market'
+    
+    result = {
+        'PAGE_NAME': PAGE_NAME    
+    }
     
     if request.method == 'GET':
         form = MarketSearch()
     else:
         form = MarketSearch(request.POST)
+        
+        print request.POST
         
         if form.is_valid():
             itemId = form.cleaned_data['items'].id
@@ -88,6 +97,16 @@ def index(request):
     result['form'] = form
     
     return result
+
+@render_to_json()
+def itemJson(request, item):
+    item = Item.objects.get(id=item)
+    history = item.getHistory()
+    
+    return {
+        'name': item.name,
+        'open_price': history.open,
+    }
     
 def parser(request):
     """
@@ -113,8 +132,9 @@ def parser(request):
             
             lineSplit = line.split(',')      
             
+            name = lineSplit[0]
+            
             itemData = {
-                'name'  : lineSplit[0],
                 'date'  : time.strftime("%Y-%m-%d", time.strptime(lineSplit[1], '%Y%m%d')),
                 'open'  : lineSplit[2],
                 'high'  : lineSplit[3],
@@ -123,7 +143,7 @@ def parser(request):
             }
             
             if item is None:
-                item = Item.objects.get_or_create(name=itemData['name'])[0]
+                item = Item.objects.get_or_create(name=name)[0]
                   
             try:
                 itemHistory = ItemHistory.objects.get(item=item, date=itemData['date'])
@@ -132,4 +152,3 @@ def parser(request):
                 itemHistory.save()
     
     return HttpResponse("Parser done")
-    #return redirect('/')

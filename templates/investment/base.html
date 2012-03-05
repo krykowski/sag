@@ -3,7 +3,9 @@
 {% block content_up %}
 
 <ul class="nav nav-pills">
-	<li class="active"><a href="{% url investment.views.wallet %}">Zawartość</a></li>
+	<li {% if PAGE_NAME == 'wallet' %}class="active"{% endif %}><a href="{% url investment.views.wallet %}">Zawartość</a></li>
+	<li {% if PAGE_NAME == 'charge' %}class="active"{% endif %}><a href="{% url investment.views.charge %}">Dodaj środki</a></li>
+	<li {% if PAGE_NAME == 'action_buy' %}class="active"{% endif %}><a href="{% url investment.views.create %}">Kup akcje</a></li>
 </ul>
 
 {% endblock content_up %}

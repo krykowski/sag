@@ -1,5 +1,45 @@
 {% extends 'investment/base.html' %}
 
 {% block content %}
-	...
+	Dostępne środki: {{ wallet.money|floatformat:2 }} PLN
+	
+	<table class="table table-bordered">
+		
+		<tbody>
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Nazwa</th>
+					<th>Wartość [PLN]</th>
+					<th>Ilość</th>
+					<th>Śr. cena zakupu</th>
+					<th>Aktualna cena</th>
+					<th>Okres inwestycji</th>
+					<th>Zysk [%]</th>
+					<th>Zysk [PLN]</th>
+				</tr>
+			</thead>
+			{% for item in items %}
+			<tr>
+				<td>{{ forloop.counter }}</td>
+				<td>{{ item.item.name }}</td>
+				<td>{{ item.current_value|floatformat:2 }} PLN</td>
+				<td>{{ item.quantity_total }}</td>
+				<td>{{ item.average_buy_price|floatformat:2 }} PLN</td>
+				<td>{{ item.item.price|floatformat:2 }} PLN</td>
+				<td>{{ item.oldest.created }}</td>
+				{% with profit=item.profit %}
+					<td class="{% if profit >= 0 %}profitPlus{% else %}profitMinus{% endif %}">
+						{% if profit > 0 %}+{% endif %}{% widthratio profit item.current_value 100 %} %
+					</td>
+				
+					<td class="{% if profit >= 0 %}profitPlus{% else %}profitMinus{% endif %}">
+						{% if profit > 0 %}+{% endif %}{{ profit|floatformat:2 }} PLN
+					</td>
+				{% endwith %}
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	
 {% endblock content %}
